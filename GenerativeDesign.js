@@ -14,7 +14,7 @@ let height = context.canvas.height;
  */
 
 let balls = [];
-let AmountOfBalls = 15;
+let AmountOfBalls = 100;
 
 let mouseX = 0;
 let mouseY = 0;
@@ -29,12 +29,16 @@ function move(eventData) {
 
 window.onmousemove = move;
 
+//this adjusts the horizontal speed of the balls
 function updateSpeed() {
-	let horSpeed = (mouseX / width) * 1 - 0.5;
-	let verSpeed = (mouseY / height) * 1 - 0.5;
+	let speedAdjust = (height - mouseY) / height;
+
+	let horSpeed = Utils.randomNumber(-5, 5); //gives the balls a random horizontal speed
+	let verSpeed = speedAdjust * 5;
 
 	for (let ball of balls) {
-		ball.xSpeed += horSpeed;
+		// adjusts the ball speed
+		ball.xSpeed = horSpeed; //random horizontal speed
 		ball.ySpeed += verSpeed;
 	}
 }
@@ -53,9 +57,9 @@ function drawBalls() {
 		balls.push({ xPos, yPos, size, xSpeed, ySpeed, color });
 	}
 }
-
+// gives the balls random colors
 function RandomColor() {
-	let colors = ["red", "blue", "white", "purple", "orange"];
+	let colors = ["red", "blue", "white", "purple", "orange", "lightblue"];
 	return colors[Math.floor(Math.random() * colors.length)];
 }
 
@@ -64,31 +68,38 @@ function updateBalls(ball) {
 	ball.xPos += ball.xSpeed;
 	ball.yPos += ball.ySpeed;
 
-	if (ball.xPos + ball.size > width || ball.xPos - ball.size < 0) {
-		ball.xSpeed = -ball.xSpeed; // reverses the horizontal direction
-		ball.color = RandomColor(); //changes color
-	}
-
-	if (ball.yPos + ball.size > height || ball.yPos - ball.size < 0) {
-		ball.ySpeed = -ball.ySpeed; // reverses the vertical direction
-		ball.color = RandomColor(); //changes color
-	}
-
 	//Makes it so the balls don't go out of bounds
 	if (ball.xPos + ball.size > width) {
-		ball.xPos = width - ball.size; // doesnt leave the right edge of the canvas
+		ball.xPos = width - ball.size;
+		ball.xSpeed = -ball.xSpeed * 0.9;
+		ball.color = RandomColor(); // doesnt leave the right edge of the canvas
 	}
 
 	if (ball.xPos + ball.size < 0) {
 		ball.xPos = ball.size; // doesnt leave the left edge of the canvas
+		ball.xSpeed = -ball.xSpeed * 0.9;
+		ball.color = RandomColor();
 	}
 
 	if (ball.yPos + ball.size > height) {
-		ball.yPos = height - ball.size; // doesnt leave the bottom edge of the canvas
+		ball.yPos = height - ball.size;
+		ball.ySpeed = -ball.ySpeed * 1;
+		ball.color = RandomColor(); // doesnt leave the right edge of the canvas
 	}
 
 	if (ball.yPos + ball.size < 0) {
-		ball.yPos = ball.size; // doesnt leave the top edge of the canvas
+		ball.yPos = ball.size; // doesnt leave the left edge of the canvas
+		ball.ySpeed = -ball.ySpeed * 1;
+		ball.color = RandomColor();
+	}
+
+	//makes balls bounce very slowly when theyre about to stop bouncing
+	if (ball.ySpeed < 1 && ball.ySpeed > -1) {
+		if (ball.ySpeed > 0) {
+			ball.ySpeed = 2;
+		} else {
+			ball.ySpeed = -2;
+		}
 	}
 }
 
