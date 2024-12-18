@@ -8,8 +8,6 @@ import * as Utils from "./scripts/utils.js";
 let width = context.canvas.width;
 let height = context.canvas.height;
 
-window.onmousemove = move;
-
 /**
  *
  * @param {MouseEvent} eventData
@@ -18,29 +16,42 @@ window.onmousemove = move;
 let balls = [];
 let AmountOfBalls = 15;
 
-drawBouncyBalls();
-
 let mouseX = 0;
 let mouseY = 0;
 
-window.onmousedown = move;
+drawBalls();
+drawBouncyBalls();
 
 function move(eventData) {
-	mouseX = eventData.PageX;
-	mouseY = eventData.PageY;
+	mouseX = eventData.pageX;
+	mouseY = eventData.pageY;
 }
 
-for (let i = 0; i < AmountOfBalls; i++) {
-	//this code was partially generated with ChatGPT (OpenAI) on 18/12/2024
+window.onmousemove = move;
 
-	let size = Utils.randomNumber(20, 100); // the radius of the balls
-	let xPos = Utils.randomNumber(size, width - size);
-	let yPos = Utils.randomNumber(size, height - size);
-	let xSpeed = Utils.randomNumber(-10, 10); // horizontal speed
-	let ySpeed = Utils.randomNumber(-10, 10); // vertical speed
-	let color = RandomColor(); // generates a random color for the balls
+function updateSpeed() {
+	let horSpeed = (mouseX / width) * 5 - 5;
+	let verSpeed = (mouseY / height) * 5 - 5;
 
-	balls.push({ xPos, yPos, size, xSpeed, ySpeed, color });
+	for (let ball of balls) {
+		ball.xSpeed += horSpeed;
+		ball.ySpeed += verSpeed;
+	}
+}
+
+function drawBalls() {
+	for (let i = 0; i < AmountOfBalls; i++) {
+		//this code was partially generated with ChatGPT (OpenAI) on 18/12/2024
+
+		let size = Utils.randomNumber(20, 100); // the radius of the balls
+		let xPos = Utils.randomNumber(size, width - size);
+		let yPos = Utils.randomNumber(size, height - size);
+		let xSpeed = Utils.randomNumber(-10, 10); // horizontal speed
+		let ySpeed = Utils.randomNumber(-10, 10); // vertical speed
+		let color = RandomColor(); // generates a random color for the balls
+
+		balls.push({ xPos, yPos, size, xSpeed, ySpeed, color });
+	}
 }
 
 function RandomColor() {
@@ -67,6 +78,8 @@ function updateBalls(ball) {
 function drawBouncyBalls() {
 	context.fillStyle = "black";
 	context.fillRect(0, 0, width, height);
+
+	updateSpeed();
 
 	//this code was partially generated with ChatGPT (OpenAI) on 18/12/2024
 	for (let i = 0; i < balls.length; i++) {
