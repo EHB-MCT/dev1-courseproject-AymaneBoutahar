@@ -2,11 +2,22 @@
 import context from "./scripts/context.js";
 import * as Utils from "./scripts/utils.js";
 
+let width = context.canvas.width;
+let height = context.canvas.height;
+
+let balls = [];
+let AmountOfBalls = 15;
+
 drawGenerativeArt();
+
+function RandomColor() {
+	let ballcolors = ["red", "blue", "white", "purple", "orange"];
+	return ballcolors[Math.floor(Math.random() * colors.length)];
+}
 
 function drawLetter(letter, x, y, fontSize) {
 	//function that draws just a single letter in a random position with random colour.
-	let colors = ["cyan", "purple", "blue", "red", "white"];
+	let colors = ["cyan", "purple", "blue", "lightblue", "white"];
 	let color = colors[Math.floor(Math.random() * colors.length)]; // randomly select a color from the colors given in let colors.
 
 	context.font = `${fontSize}20px IBM Plex Mono, monospace`; // sets the font for the text with the given font. In this case, IBM Plex Mono.
@@ -16,8 +27,6 @@ function drawLetter(letter, x, y, fontSize) {
 
 function drawGenerativeArt() {
 	// draws the design (the word "CHILL" with the randomly colored circles).
-	let width = context.canvas.width;
-	let height = context.canvas.height;
 
 	context.fillStyle = "black";
 	context.fillRect(0, 0, width, height);
@@ -46,8 +55,8 @@ function drawRandomCircles(width, height) {
 		let radius = Math.random() * 50 + 10;
 		let x = Math.random() * width;
 		let y = Math.random() * height;
-		let colors = ["cyan", "purple", "blue", "red", "white"];
-		let color = colors[Math.floor(Math.random() * colors.lenght)];
+		let colors = ["cyan", "purple", "blue", "lightblue", "white"];
+		let color = colors[Math.floor(Math.random() * colors.length)];
 
 		//steps to draw the circle
 		context.beginPath();
