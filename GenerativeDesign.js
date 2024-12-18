@@ -8,15 +8,32 @@ import * as Utils from "./scripts/utils.js";
 let width = context.canvas.width;
 let height = context.canvas.height;
 
+window.onmousemove = move;
+
+/**
+ *
+ * @param {MouseEvent} eventData
+ */
+
 let balls = [];
 let AmountOfBalls = 15;
 
 drawBouncyBalls();
 
+let mouseX = 0;
+let mouseY = 0;
+
+window.onmousedown = move;
+
+function move(eventData) {
+	mouseX = eventData.PageX;
+	mouseY = eventData.PageY;
+}
+
 for (let i = 0; i < AmountOfBalls; i++) {
 	//this code was partially generated with ChatGPT (OpenAI) on 18/12/2024
 
-	let size = Utils.randomNumber(0, 70); // the radius of the balls
+	let size = Utils.randomNumber(20, 100); // the radius of the balls
 	let xPos = Utils.randomNumber(size, width - size);
 	let yPos = Utils.randomNumber(size, height - size);
 	let xSpeed = Utils.randomNumber(-10, 10); // horizontal speed
