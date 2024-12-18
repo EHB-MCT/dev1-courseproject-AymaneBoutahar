@@ -14,7 +14,7 @@ let height = context.canvas.height;
  */
 
 let balls = [];
-let AmountOfBalls = 50;
+let AmountOfBalls = 70;
 
 let mouseX = 0;
 let mouseY = 0;
