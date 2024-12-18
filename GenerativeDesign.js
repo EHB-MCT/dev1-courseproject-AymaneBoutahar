@@ -47,6 +47,11 @@ function updateBalls(ball) {
 	}
 }
 
+function drawBouncyBalls() {
+	context.fillStyle = "black";
+	context.fillRect(0, 0, width, height);
+}
+
 function drawLetter(letter, x, y, fontSize) {
 	//function that draws just a single letter in a random position with random colour.
 	let colors = ["cyan", "purple", "blue", "lightblue", "white"];
@@ -67,14 +72,6 @@ function drawGenerativeArt() {
 	let beginx = width * 0.15; // X starting position is set to 15% of the canvas width
 	let beginy = height * 0.5; // Y starting position is set to the middle of the canvas
 	let fontSize = width * 0.15; // The font size takes about 15% of the canvas width
-	let word = "CHILL";
-
-	//this code was partially generated with ChatGPT (OpenAI) on 18/12/2024 https://chatgpt.com/share/6762d272-7fe4-8006-8ed2-0f1091dda8b9
-	for (let i = 0; i < word.length; i++) {
-		let x = beginx + i * (fontSize * 1.1); // zorgt voor een soort van willekeurige offset wat voor dynamiek zorgt in het werk
-		let y = beginy + (Math.random() - 0.5) * fontSize;
-		drawLetter(word[i], x, y, fontSize);
-	}
 
 	drawRandomCircles(width, height); // function call to draw random circles with random colours and coordinates
 }
